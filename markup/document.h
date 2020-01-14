@@ -9,7 +9,7 @@ public:
     Document(QString path);
 
     void save();
-    void setContent(QString content);
+    virtual void setContent(QString content);
     void setPath(QString path);
 
     QString getPath();

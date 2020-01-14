@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "markdownparser.h"
 #include "document.h"
+#include "autosaveddocument.h"
 
 #include <QFileDialog>
 #include <QTextStream>
@@ -39,7 +40,7 @@ void MainWindow::newFile(){
 
     m_settings.remove("currentFile");
 
-    this->m_document = new Document();
+    this->m_document = new AutosavedDocument();
     ui->editor->setPlainText(m_document->getContent());
 }
 
@@ -54,7 +55,7 @@ void MainWindow::openFile(){
 
 void MainWindow::openFile(QString fileName){
 
-    this->m_document = new Document(fileName);
+    this->m_document = new AutosavedDocument(fileName);
 
     if(m_document->getContent() != nullptr){
         ui->editor->setPlainText(m_document->getContent());
