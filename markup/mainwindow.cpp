@@ -15,30 +15,29 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
-
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(newFile()));
-
     connect(ui->actionSave_file, SIGNAL(triggered()), this, SLOT(saveFile()));
+    connect(ui->actionToggle_preview, SIGNAL(triggered()), this, SLOT(togglePreview()));
 
     connect(ui->editor, SIGNAL(textChanged()), this, SLOT(refreshRenderer()));
 
     QCoreApplication::setOrganizationName("Rlbisbe");
     QCoreApplication::setOrganizationDomain("rlbisbe.net");
     QCoreApplication::setApplicationName("MarkUp");
+
+    this->updatePreview();
 }
 
 void MainWindow::reloadBuffer(){
 
-    QSettings settings;
-    if(settings.contains("currentFile")){
-        openFile(settings.value("currentFile").toString());
+    if(m_settings.contains("currentFile")){
+        openFile(m_settings.value("currentFile").toString());
     }
 }
 
 void MainWindow::newFile(){
 
-    QSettings settings;
-    settings.remove("currentFile");
+    m_settings.remove("currentFile");
 
     this->m_document = new Document();
     ui->editor->setPlainText(m_document->getContent());
@@ -60,8 +59,7 @@ void MainWindow::openFile(QString fileName){
     if(m_document->getContent() != nullptr){
         ui->editor->setPlainText(m_document->getContent());
 
-        QSettings settings;
-        settings.setValue("currentFile", fileName);
+        m_settings.setValue("currentFile", fileName);
         this->updateWindowTitle();
     }
 }
@@ -82,6 +80,16 @@ void MainWindow::saveFile(){
 
     this->m_document->save();
     this->updateWindowTitle();
+}
+
+void MainWindow::togglePreview(){
+    m_settings.setValue("previewEnabled", !m_settings.value("previewEnabled", false).toBool());
+    this->updatePreview();
+}
+
+void MainWindow::updatePreview(){
+    bool previewEnabled = m_settings.value("previewEnabled", false).toBool();
+    ui->preview->setVisible(previewEnabled);
 }
 
 void MainWindow::updateWindowTitle(){

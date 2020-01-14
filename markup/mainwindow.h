@@ -23,7 +23,8 @@ private slots:
     void openFile();
     void saveFile();
     void refreshRenderer();
-
+    void togglePreview();
+    void updatePreview();
 
 private:
     Ui::MainWindow *ui;
@@ -31,5 +32,6 @@ private:
 
     void openFile(QString filename);
     void updateWindowTitle();
+    QSettings m_settings;
 };
 #endif // MAINWINDOW_H
