@@ -22,3 +22,8 @@ void TestMarkdownParser::ul(){
     QCOMPARE(output, QString("<ul><li>Hello</li></ul><p></p>"));
 }
 
+void TestMarkdownParser::code(){
+    QString output = MarkdownParser().convertToHtml("`tmux`");
+    QCOMPARE(output, QString("<p><pre>tmux</pre></p>"));
+}
+

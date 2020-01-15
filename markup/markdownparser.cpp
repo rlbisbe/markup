@@ -1,5 +1,6 @@
 #include "markdownparser.h"
 #include <QTextStream>
+#include <QRegularExpression>
 
 static const char* HEADER_1 = "#";
 static const char* HEADER_2 = "##";
@@ -60,8 +61,37 @@ QString MarkdownParser::processRow(QString row, QString source, QString htmlElem
     QString newText = QString("");
     newText.append("<" + htmlElement + ">");
     row.replace(source, "");
-    newText.append(row);
+    newText.append(processIndividualWords(row));
     newText.append("</" + htmlElement + ">");
 
     return newText;
+}
+
+QString MarkdownParser::processIndividualWords(QString row)
+{
+    //Regexp for a Markdown link
+    QRegularExpression link("\\[(.*)\\]\\((.*)\\)");
+    QRegularExpressionMatchIterator j = link.globalMatch(row);
+
+    while (j.hasNext()) {
+        QRegularExpressionMatch match = j.next();
+        QString all = match.captured(0);
+        QString name = match.captured(1);
+        QString link = match.captured(2);
+        row.replace(all, " <a href=\"" + link + "\">" + name + "</a>");
+    }
+
+
+    //Regexp for a markdown preformatted inline
+    QRegularExpression code("`([^`]*)`");
+    QRegularExpressionMatchIterator i = code.globalMatch(row);
+
+    while (i.hasNext()) {
+        QRegularExpressionMatch match = i.next();
+        QString all = match.captured(0);
+        QString minor = match.captured(1);
+        row.replace(all, " <code>" + minor + "</code> ");
+    }
+
+    return row;
 }

@@ -11,6 +11,7 @@ public:
 
 private:
     QString processRow(QString row, QString source, QString htmlElement);
+    QString processIndividualWords(QString row);
 };
 
 #endif // MARKDOWNPARSER_H

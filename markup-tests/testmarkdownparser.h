@@ -12,6 +12,7 @@ private slots:
     void h2();
     void h3();
     void ul();
+    void code();
 };
 
 #endif // MARKDOWNPARSERTESTS_H
