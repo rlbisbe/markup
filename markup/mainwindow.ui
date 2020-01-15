@@ -22,8 +22,6 @@
         <property name="font">
          <font>
           <family>Courier New</family>
-          <weight>75</weight>
-          <bold>true</bold>
          </font>
         </property>
        </widget>
@@ -60,6 +58,14 @@
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
   </widget>
   <action name="actionOpen">
    <property name="text">

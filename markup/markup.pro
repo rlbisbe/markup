@@ -20,13 +20,16 @@ SOURCES += \
     document.cpp \
     main.cpp \
     mainwindow.cpp \
-    markdownparser.cpp
+    markdownparser.cpp \
+    wordcounter.cpp
 
 HEADERS += \
     autosaveddocument.h \
     document.h \
+    include/wordcounter.h \
     mainwindow.h \
-    markdownparser.h
+    markdownparser.h \
+    wordcounter.h
 
 FORMS += \
     mainwindow.ui

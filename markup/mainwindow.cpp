@@ -3,6 +3,7 @@
 #include "markdownparser.h"
 #include "document.h"
 #include "autosaveddocument.h"
+#include "wordcounter.h"
 
 #include <QFileDialog>
 #include <QTextStream>
@@ -70,6 +71,9 @@ void MainWindow::refreshRenderer(){
     QString htmlContent = MarkdownParser().convertToHtml(m_document->getContent());
     ui->preview->setText(htmlContent);
     this->updateWindowTitle();
+
+    WordCounter* wordCounter = new WordCounter();
+    ui->statusBar->showMessage(QString::number(wordCounter->count(m_document->getContent())) + " words");
 }
 
 void MainWindow::saveFile(){
